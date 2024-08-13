@@ -9,7 +9,7 @@ BACKGROUND = '#01796f'
 FONT = ('Gugi-Regular', 25)
 total_incorrect = []
 
-rows = ['Correct issue type', 'Correct process followed']
+rows = ['Correct issue type (ATI)', 'Correct process followed']
 
 
 correct_with_both = []
@@ -33,25 +33,25 @@ def create_statistic(drop):
     correct_process_only.clear()
     wrong_process_no_ati.clear()
 
-    data_new = data.loc[data['Agent'].notna(), rows]
+    data_new = data.loc[data['IH Agent'].notna(), rows]
 
     for index, row in data_new.iterrows():
-        if row['Correct issue type'] == True and row['Correct process followed'] == True:
+        if row['Correct issue type (ATI)'] == True and row['Correct process followed'] == True:
             correct_with_both.append(row)  # Both requirements have been fulfilled
-        elif row['Correct issue type'] == True and row['Correct process followed'] == False:
+        elif row['Correct issue type (ATI)'] == True and row['Correct process followed'] == False:
             correct_ati_only.append(row)
-        elif row['Correct issue type'] == False and row['Correct process followed'] == True:
+        elif row['Correct issue type (ATI)'] == False and row['Correct process followed'] == True:
             correct_process_only.append(row)
-        elif (row['Correct issue type'] == False and row['Correct process followed'] == False) and (row['Correct issue type (ATI)'] != 'Nan' and row['Correct process followed'] != 'Nan'):
+        elif (row['Correct issue type (ATI)'] == False and row['Correct process followed'] == False) and (row['Correct issue type (ATI)'] != 'Nan' and row['Correct process followed'] != 'Nan'):
             wrong_process_no_ati.append(row)
         else:
             break
 
 
-    #global total_incorrect = wrong_process_no_pt + correct_process_only + correct_pt_only
+    #global total_incorrect = wrong_process_no_ati + correct_process_only + correct_ati_only
 
 
-    plt.bar(['correct', 'correct_problem', 'correct_process', 'entirely_wrong'],
+    plt.bar(['correct', 'correct_ati', 'correct_process', 'entirely_wrong'],
             [len(correct_with_both), len(correct_ati_only), len(correct_process_only), len(wrong_process_no_ati)], color=COLORS)
 
     for i, v in enumerate([len(correct_with_both), len(correct_ati_only), len(correct_process_only), len(wrong_process_no_ati)]):
