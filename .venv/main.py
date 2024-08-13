@@ -14,11 +14,11 @@ rows = ['Correct issue type', 'Correct process followed']
 
 correct_with_both = []
 
-correct_ati_only = []
+correct_ti_only = []
 
 correct_process_only = []
 
-wrong_process_no_ati = []
+wrong_process_no_ti = []
 
 def get_week():
     week = entry.get()
@@ -29,9 +29,9 @@ def create_statistic(drop):
     data = pd.read_csv(drop)
     global rows
     correct_with_both.clear()  # Clear the lists
-    correct_ati_only.clear()
+    correct_ti_only.clear()
     correct_process_only.clear()
-    wrong_process_no_ati.clear()
+    wrong_process_no_ti.clear()
 
     data_new = data.loc[data['Agent'].notna(), rows]
 
@@ -42,8 +42,8 @@ def create_statistic(drop):
             correct_ati_only.append(row)
         elif row['Correct issue type'] == False and row['Correct process followed'] == True:
             correct_process_only.append(row)
-        elif (row['Correct issue type'] == False and row['Correct process followed'] == False) and (row['Correct issue type (ATI)'] != 'Nan' and row['Correct process followed'] != 'Nan'):
-            wrong_process_no_ati.append(row)
+        elif (row['Correct issue type'] == False and row['Correct process followed'] == False) and (row['Correct issue type (TI)'] != 'Nan' and row['Correct process followed'] != 'Nan'):
+            wrong_process_no_ti.append(row)
         else:
             break
 
